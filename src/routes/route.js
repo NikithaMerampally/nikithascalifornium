@@ -45,10 +45,27 @@ router.get('/test-me', function (req, res) {
 });
 
 
-router.get('/test-you', function(req, res){
+router.get('/test-me', function(req, res){
     console.log("I am here")
     res.send("very important text")
 })
 
+router.get("/movies",function(req,res){
+    let movies=["3 idiots","bahubali","YJHD","baarish",]
+    
+
+    res.send(movies)
+})
+router.get("/profile/:name/:ordernUmber",function(req,res){
+    console.log(`user name is ${req.params.name}`)
+    
+    
+    if(req.params.ordernUmber>10){
+        res.send("you have entered wrong orderNumber")
+        
+    }
+    })
+    
+    
 
 module.exports = router;

@@ -6,6 +6,7 @@ const _ = require('underscore')
 const mentorModule = require('../abc/xyz/myModule'); 
 const req = require('express/lib/request');
 const { route } = require('express/lib/application');
+const { result } = require('underscore');
 
 
 router.get("/profile-details", function(req, res){
@@ -66,12 +67,65 @@ router.get("/profile/:name", function(req, res){
     res.send("dummy details")
 })
 
-// Query Param example
-router.get("/shoes", function(req, res){
-    console.log("The filter options for shoes are -",req.query)
+
+router.get("/movie", function(req, res){
+    let movies=["bahubali","3 idiots","bajirao mastani"]
+    res.send(movies)//first  ans
+    
+})
+router.get("/movie/:indexNumber", function(req, res){
+    let movies=["bahubali","3 idiots","bajirao mastani"]
+    let length=movies.length
     //req.query.size
     //req.query.brand
-    res.send("dummy shoes response")
+let index=req.params.indexNumber
+if (index>=length){
+    res.send("please use a valid index")//thirds ans
+}else{
+    res.send(movies[index])//second ans
+
+}   
 })
+
+router.get("/films",function(req,res){
+    let filmsarray=[{
+        "id":1,
+        "name":"baarish"
+    },{
+        "id":2,
+        "name":"YJHD"
+    },{
+        "id":3,
+        "name":"3 idiots"
+    },{
+        "id":4,
+        "name":"The rising stars"
+    }]
+ res.send(filmsarray)//fourth ans 
+})
+router.get("/films/:filmsId",function(req,res){
+    let filmsarray=[{
+        "id":1,
+        "name":"baarish"
+    },{
+        "id":2,
+        "name":"YJHD"
+    },{
+        "id":3,
+        "name":"3 idiots"
+    },{
+        "id":4,
+        "name":"The rising stars"
+    }]
+ let filmsID=req.params.filmsId
+ let arraylength=filmsarray.length
+ if(filmsID>=arraylength){
+    res.send(filmsarray[filmsID])
+ }else{
+   
+    res.send(filmsarray[filmsID])//fifth ans cc
+ }
+})
+
 
 module.exports = router;

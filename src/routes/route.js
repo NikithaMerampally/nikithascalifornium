@@ -127,5 +127,33 @@ router.get("/films/:filmsId",function(req,res){
  }
 })
 
+//todays assignment
+router.get("/sol1",function(req,res){
+    let array=[1,2,3,5,6,7];
+    let length=array.length;
+    let n=array[length-1];
+    
+    let consSum=n*(n+1)/2;
+    let summ=0
+    array.forEach((i)=>{
+        summ=summ+i
+
+    })
+    let obj={datatype:consSum-summ}
+    res.send(obj);
+
+})
+//solution2 
+router.get("/sol2", function (req, res) {
+    
+    let ar= [33, 34, 35, 37, 38]
+    let sum2=0
+    ar.forEach((x)=>sum2+=x)
+    let result2=((ar.length+1)*(ar[0]+ar[ar.length-1])/2)
+    let obj2={'datamissing' : result2-sum2}
+    res.send(obj2)
+
+
+})
 
 module.exports = router;

@@ -156,4 +156,14 @@ router.get("/sol2", function (req, res) {
 
 })
 
+
+router.post("/test-post",function(req,res){
+    let ele=req.body.element;
+    let newArray=[1,2,3]
+    newArray.push(ele)
+    
+    res.send({a:newArray,status:true})
+    console.log({a:newArray,status:true})
+
+})
 module.exports = router;

@@ -77,7 +77,10 @@ let players=[
         "city": "jalandhar",
         "sports": [
             "swimming"
-        ]
+        ],
+        "bookings":[],
+        "bookingId":1
+        
     },
     {
         "name": "gopal",
@@ -87,6 +90,8 @@ let players=[
         "sports": [
             "soccer"
         ],
+        "bookings":[],
+        "bookingId":2
     },
     {
         "name": "lokesh",
@@ -96,6 +101,8 @@ let players=[
         "sports": [
             "soccer"
         ],
+        "bookings":[],
+        "bookingId":3
     },
 ]
 router.post("/players",function(req,res){
@@ -110,12 +117,37 @@ router.post("/players",function(req,res){
     
        res.send({ data: players , status:true})
 })
+//bonusQuestion
+
+router.post("/players/:playername/bookings/:bookingId",function(req,res){
+    let response=[]
+    
+    for(let i=0;i<players.length;i++){
+        
+        if ((players[i]["name"]==req.params.playername)&&(players[i]["bookingId"]==req.params.bookingId)){
+
+            players[i]["bookings"].push(req.body);
+            response=(players[i])
+            
+    }else if ((players[i]["name"]!=req.params.playername)){
+        response="player does not exists"
+    }else if((players[i]["bookingId"]!=req.params.bookingId)){
+        response="player already booked"
+    }
+    
+    
+
+}  
+
+
+res.send(response)       
+
+})
+
+
         
     
     
-   
-    
-
 
 module.exports = router;
 

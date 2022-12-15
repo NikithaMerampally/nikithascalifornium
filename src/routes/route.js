@@ -1,54 +1,32 @@
 const express = require('express');
 const router = express.Router();
 
+const bodyParser = require('body-parser');
+const route = require('./routes/route.js');
+const app = express();
+const mongoose = require('mongoose')
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//connecting nodejs app with mongoDb
+mongoose.connect("mongodb+srv://NikithaMerampally:nikitha123@nikithascluster.hwo5ucz.mongodb.net/test", {useNewUrlParser: true})
+    .then(() => console.log('mongodb running on 27017'))
+    .catch(err => console.log(err))
+
+app.use('/', route);
+
+app.listen(process.env.PORT || 3000, function() {
+    console.log('Express app running on port ' + (process.env.PORT || 3000))
+});
+
 router.get('/students/:name', function(req, res) {
     let studentName = req.params.name
     console.log(studentName)
     res.send(studentName)
 })
 
-router.get("/random" , function(req, res) {
-    res.send("hi there")
-})
 
-
-router.get("/test-api" , function(req, res) {
-    res.send("hi FunctionUp")
-})
-
-
-router.get("/test-api-2" , function(req, res) {
-    res.send("hi FunctionUp. This is another cool API")
-})
-
-
-router.get("/test-api-3" , function(req, res) {
-    res.send("hi FunctionUp. This is another cool API. And NOw i am bored of creating API's ")
-})
-
-
-router.get("/test-api-4" , function(req, res) {
-    res.send("hi FunctionUp. This is another cool API. And NOw i am bored of creating API's. PLZ STOP CREATING MORE API;s ")
-})
-
-
-
-router.get("/test-api-5" , function(req, res) {
-    res.send("hi FunctionUp5. This is another cool API. And NOw i am bored of creating API's. PLZ STOP CREATING MORE API;s ")
-})
-
-router.get("/test-api-6" , function(req, res) {
-    res.send({a:56, b: 45})
-})
-
-router.post("/test-post", function(req, res) {
-    res.send([ 23, 45 , 6])
-})
-
-
-router.post("/test-post-2", function(req, res) {
-    res.send(  { msg: "hi" , status: true }  )
-})
 
 router.post("/test-post-3", function(req, res) {
     // let id = req.body.user
@@ -63,19 +41,6 @@ router.post("/test-post-3", function(req, res) {
 
 
 
-router.post("/test-post-4", function(req, res) {
-    let arr= [ 12, "functionup"]
-    let ele= req.body.element
-    arr.push(ele)
-    res.send(  { msg: arr , status: true }  )
-})
-
-
-
-
-// QUERY vs PARAMS
-// Params ( path params ):-  used to load different items/pages based on a variable value in url
-// params variable name  is not visible in  the url
 
 
 router.get("/wiki/:countryName", function(req, res) {
@@ -87,22 +52,7 @@ router.get("/wiki/:countryName", function(req, res) {
 
 
 
-// router.get("/wiki/india", function(req, res) {
-//     // ...
-//     res.send( {data: "something india"} )
-// })
 
-
-// router.get("/wiki/bangladesh", function(req, res) {
-//     // ...
-//     res.send( {data: "something bangaldesh"} )
-// })
-
-
-// router.get("/wiki/nepal", function(req, res) {
-//     // ...
-//     res.send( {data: "something nepal nepal"} )
-// })
 
 
 router.get("/:productName/p/:itemId", function(req, res) {
@@ -113,13 +63,7 @@ router.get("/:productName/p/:itemId", function(req, res) {
     res.send( {data: product} )
 })
 
-// QUERY params:-
-//  use case: to make filters / searches
-// variable name is visible in the url itself
 
-
-//a get request with 2 query params
-// localhost:3000/get-query-1?myCoolVar=soemthing&xyz=functionUp
 router.get("/get-query-1", function(req, res) {
     let data = req.query
     let var1= data.myCoolVar
@@ -196,6 +140,5 @@ let persons= [
         }
     })
     res.send(newArray)
-
  })
 module.exports = router;

@@ -1,0 +1,2 @@
+mongodb+srv://NikithaMerampally:<password>@nikithascluster.hwo5ucz.mongodb.net/test
+password:nikitha123

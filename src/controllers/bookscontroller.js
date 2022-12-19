@@ -32,7 +32,5 @@ res.send({msg:allbooksdata})// all books with pages greater than 500 or isavaial
 
 
 
-
-
 module.exports.createbooks=createbooks;
 module.exports.getbooks=getbooks;

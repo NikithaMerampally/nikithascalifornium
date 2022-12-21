@@ -3,7 +3,8 @@ const router = express.Router();
 // const UserModel= require("../models/userModel.js")
 // const UserController= require("../controllers/userController")
 // const BookController= require("../controllers/bookController")
-const assignmentController=require("../controllers/assignmentcontroller")
+const assignmentController=require("../controllers/assignmentcontroller");
+const projectcontroller=require("../controllers/projectcontroller")
 
 // router.get("/test-me", function (req, res) {
 //     res.send("My first ever api!")
@@ -50,6 +51,13 @@ router.get("/authorname",assignmentController.booksbychetan);
 router.get("/bookauthor",assignmentController.authorofbook);
 
 router.get("/getpricebooks",assignmentController.bookRange);
+
+//project
+router.post("/createcard",projectcontroller.cardpost);
+router.get("/getcards",projectcontroller.getcard)
+
+router.post("/createcustomer",projectcontroller.customerpost);
+router.get("/getcustomer",projectcontroller.getcustomer);
 
 
 

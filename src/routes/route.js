@@ -4,6 +4,8 @@ const router = express.Router();
 const authorController= require("../controllers/authorController")
 const bookController= require("../controllers/bookController")
 const assignmentcontroller=require('../controllers/assignmentcontroler')
+const middlewarefile=require("../middleware/middleware1");
+const mycontroller=require("../controllers/mycontroller")
 
 router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
@@ -35,6 +37,7 @@ router.get("/bookswithtrue",assignmentcontroller.bookswithtrue);
 
 router.put('/books',assignmentcontroller.bookswithtrue)
 
+router.get("/reference",middlewarefile.midd,mycontroller.myhandler )
 
 
 module.exports = router;

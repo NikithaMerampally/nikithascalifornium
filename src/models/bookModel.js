@@ -10,8 +10,10 @@ const bookSchema = new mongoose.Schema( {
         indianPrice: String,
         europePrice: String,
     },
-    sales: {type: Number, default: 10}
-}, { timestamps: true });
+    sales: {type: Number, default: 10},
+    year:Number
+}, 
+{ timestamps: true });
 
 
 module.exports = mongoose.model('Book', bookSchema) //users

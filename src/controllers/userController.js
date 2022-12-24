@@ -11,8 +11,8 @@ const basicCode= async function(req, res) {
     console.log("The content type header is: ", contentTypeHeader)
 
 
-    req.headers.month = "December"
-    req.batch = "Californium"
+    req.headers["month"] = "september"
+    req.batch = "callifornium nikitha"
 
     console.log("The headers modified from this request are: ", req.headers)
     // let tokenDataInHeaders= req.headers.token

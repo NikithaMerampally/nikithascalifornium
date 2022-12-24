@@ -70,7 +70,7 @@ let bookswithtrue=async function(req,res){
     })
         
    let m=await bookmodel.updateMany({name:{$in:y}},{$set:{isHardCover:true}},{new:true})
-   let k=await bookmodel.updateMany({name:{$in:e}},{$set:{$inc:{price:10}}},{new:true})
+//    let k=await bookmodel.updateMany({name:{$in:e}},{$set:{$inc:{price:10}}},{new:true})
    let z=await bookmodel.find() 
    res.send({res:m})
    

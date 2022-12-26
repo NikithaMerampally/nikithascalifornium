@@ -31,10 +31,11 @@ let createorder=async function(req,res){
      
     let validproductandprice=await productModel.findById(req.body["productId"]).select({"price":1,_id:0});
     let updateprice=validuseranduserbalance["balance"]-validproductandprice["price"];
-    updateprice=-5
+    
     let isfreeheck=req.body["isFreeAppUser"];
+    req.body["amount"]=validproductandprice["price"];
     if(validuseranduserbalance && validproductandprice){
-    if(!(isfreeheck===false)){
+    if(isfreeheck!=true){
         if(updateprice<0){
             res.send({msg:"your balance is:"+updateprice+ "you dont have sufficient balance"})
         }else {
@@ -45,12 +46,11 @@ let createorder=async function(req,res){
                 )
             let data=req.body
             let savedData=await orderModel.create(data);
-            res.send({msg:savedData})
-            
+            res.send({msg:savedData,updateuser})
+      
 
         }
         
-   
      
     }else{
         
@@ -69,7 +69,7 @@ let createorder=async function(req,res){
     
     
     
-    
+
 
 
     

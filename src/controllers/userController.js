@@ -104,7 +104,7 @@ const postMessage = async function (req, res) {
     if(userToBeModified != userLoggedIn) return res.send({status: false, msg: 'User logged is not allowed to modify the requested users data'})
 
     let user = await userModel.findById(req.params.userId)
-    if(!user) return res.send({status: false, msg: 'No such user exists'})
+    if(!user) return res.send({status: false, msg: 'No  user exists'})
     
     let updatedPosts = user.posts
     //add the message to user's posts

@@ -12,7 +12,14 @@ let mid1= function(req,res,next){
         res.send({msg:"token is mismatched"})
     }
     console.log(verifiedtoken)
-    next()
+    let userToBeModified = req.params["userId"]
+    // //userId for the logged-in user
+    let userLoggedIn = verifiedtoken["userId"]
+    console.log(userLoggedIn)g
+
+    // //userId comparision to check if the logged-in user is requesting for their own data
+    if((userToBeModified != userLoggedIn)) return res.send({status: false, msg: 'User logged is not allowed to modify the requested users data'})
+     next()
 } 
 
 

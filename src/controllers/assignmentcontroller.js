@@ -11,9 +11,9 @@ let createuser=async function(req,res){
 }
 
 let logindata=async function(req,res){
-    let userName=req.body["userName"];
-    let password=req.body["userName"];
-    let username1= await userModel.findOne({userName:userName});
+    
+    let password=req.body["password"];
+    let username1= await userModel.findOne({userName:req.body["userName"]});
     if(!username1){
         res.send({status:false,msg:"user is invalid"});
     }
@@ -21,6 +21,7 @@ let logindata=async function(req,res){
     //if my user details are correct now in response i will generate a jwt 
 
     let token=jwt.sign({userId:username1["_id"].toString()},"verysecretkey");
+    
     res.setHeader("x-auth-token", token);
     res.send({status:true,token:token})
 
@@ -69,10 +70,6 @@ let DeleteUser=async function(req,res){
     res.send({msg:user})
 
 }
-
-
-
-
 
 
 module.exports.createuser=createuser;

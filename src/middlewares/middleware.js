@@ -11,6 +11,7 @@ let mid1= function(req,res,next){
     if(!verifiedtoken){
         res.send({msg:"token is mismatched"})
     }
+    console.log(verifiedtoken)
     next()
 } 
 

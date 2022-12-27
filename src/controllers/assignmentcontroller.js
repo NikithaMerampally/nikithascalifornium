@@ -13,7 +13,7 @@ let createuser=async function(req,res){
 let logindata=async function(req,res){
     let userName=req.body["userName"];
     let password=req.body["userName"];
-    let username1= await userModel.find({userName:userName});
+    let username1= await userModel.findOne({userName:userName});
     if(!username1){
         res.send({status:false,msg:"user is invalid"});
     }

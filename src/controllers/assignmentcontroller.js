@@ -18,30 +18,34 @@ let logindata=async function(req,res){
         res.send({status:false,msg:"user is invalid"});
     }
     
+    
     //if my user details are correct now in response i will generate a jwt 
 
-    let token=jwt.sign({userId:username1["_id"].toString()},"verysecretkey");
+    let token=jwt.sign({userId:(username1["_id"].toString())},"verysecretkey");
     
-    res.setHeader("x-auth-token", token);
+    
+    
     res.send({status:true,token:token})
 
 
 }
 
-let getuser=async function(req,res){
-    
+let getuser=async function(req,res){ 
     let userId=mongoose.Types.ObjectId(req.params["userId"])
-    console.log(userId)
+    //console.log(userId)
     
     let user = await userModel.findById(userId);
     console.log(user)
     
-    if(!user){
-        return res.send({status:false,msg:"no such user exists"})
+    if(user){
+        res.send({msg:user})    
     }
-    res.send({msg:user})
-
+    res.status(404).send("user does not exists")
 }
+    
+
+    
+
 
 let updateuser=async function(req,res){
      //main logic 
@@ -58,6 +62,7 @@ let updateuser=async function(req,res){
 
 let DeleteUser=async function(req,res){
     //main logic 
+    
     let userIddd=mongoose.Types.ObjectId(req.params.userIddd)
     console.log(userIddd)
     
@@ -76,4 +81,4 @@ module.exports.createuser=createuser;
 module.exports.logindata=logindata;
 module.exports.getuser=getuser;
 module.exports.updateuser=updateuser;
-module.exports.DeleteUser=DeleteUser
+module.exports.DeleteUser=DeleteUser;

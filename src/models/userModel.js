@@ -14,7 +14,10 @@ const userSchema = new mongoose.Schema( {
         enum: ["male", "female", "other"]
     },
     age: Number,
-    isDeleted:Boolean
+    isDeleted:{
+        type:Boolean,
+        required:true
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('facebookuser', userSchema)

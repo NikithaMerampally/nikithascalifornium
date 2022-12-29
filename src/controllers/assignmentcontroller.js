@@ -3,31 +3,25 @@ const userModel = require("../models/userModel");
 const mongoose=require('mongoose')
 
 let createuser=async function(req,res){
+  try{
     let data=req.body
     let savedData=await userModel.create(data);
     res.send({msg:savedData})
+}
 
-
+catch(error){
+  res.status(404).send(error.message)
+}
 }
 
 let logindata=async function(req,res){
-    
-    let password=req.body["password"];
-    let username1= await userModel.findOne({userName:req.body["userName"]});
+    let username1= await userModel.findOne({userName:req.body["userName"]},{password:req.body["password"]});
     if(!username1){
         res.send({status:false,msg:"user is invalid"});
-    }
-    
-    
-    //if my user details are correct now in response i will generate a jwt 
-
+    } 
+    //if my user details are correct now in response i will generate a jwt
     let token=jwt.sign({userId:(username1["_id"].toString())},"verysecretkey");
-    
-    
-    
     res.send({status:true,token:token})
-
-
 }
 
 let getuser=async function(req,res){ 
@@ -44,15 +38,12 @@ let getuser=async function(req,res){
 }
     
 
-    
-
-
 let updateuser=async function(req,res){
      //main logic 
-     let userIdd=mongoose.Types.ObjectId(req.params.userIdd)
-    console.log(userIdd)
+     let userId=mongoose.Types.ObjectId(req.params.userId)
+    console.log(userId)
     
-    let user = await userModel.findOneAndUpdate({userName:userIdd},{$set:{password:"nikitha123"}});
+    let user = await userModel.findOneAndUpdate({_id:userId},{$set:{password:"nikitha123"}},{new:true});
     
     if(!user){
         return res.send({status:false,msg:"no such user exists"})
@@ -63,11 +54,11 @@ let updateuser=async function(req,res){
 let DeleteUser=async function(req,res){
     //main logic 
     
-    let userIddd=mongoose.Types.ObjectId(req.params.userIddd)
-    console.log(userIddd)
+    let userId=mongoose.Types.ObjectId(req.params.userId)
+    console.log(userId)
     
-    let user = await userModel.findOneAndUpdate({userName:userIddd},
-        {$set:{isDeleted:true}},{upsert:true});
+    let user = await userModel.findOneAndUpdate({_id:userId},
+        {$set:{isDeleted:true}},{new:true});
     
     if(!user){
         res.send({status:false,msg:"no such user exists"})

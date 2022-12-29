@@ -8,20 +8,18 @@ let mid1= function(req,res,next){
     }
     //if token is present then verify the token
     let verifiedtoken= jwt.verify(token,"verysecretkey")
-    
-    
     if(!verifiedtoken){
         res.send({msg:"token is mismatched"})
     }
     
     
-    console.log(verifiedtoken)
-    let userToBeModified = req.params["userId"]
+    
+    let userToBeModified = req.params.userId
+    console.log(userToBeModified)
     // //userId for the logged-in user
     let userLoggedIn = verifiedtoken["userId"]
-    console.log(userLoggedIn)
-    next()
-    
+    console.log("token userId:"+userLoggedIn)
+
 
     // userId comparision to check if the logged-in user is requesting for their own data
     if((userToBeModified != userLoggedIn)) 

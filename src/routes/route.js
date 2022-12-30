@@ -17,6 +17,8 @@ router.get("/users/:userId",middleware.mid1, assignmentcontroller.getuser)
 
 router.put("/users/:userId", middleware.mid1,assignmentcontroller.updateuser)
 
-router.delete("/delete/:userId",middleware.mid1, assignmentcontroller.DeleteUser)
+router.delete("/delete/:userId",middleware.mid1, assignmentcontroller.DeleteUser);
+
+
 
 module.exports = router;

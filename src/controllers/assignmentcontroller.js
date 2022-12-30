@@ -15,17 +15,24 @@ catch(error){
 }
 
 let logindata=async function(req,res){
+    
     let username1= await userModel.findOne({userName:req.body["userName"]},{password:req.body["password"]});
     if(!username1){
         res.send({status:false,msg:"user is invalid"});
     } 
+  
     //if my user details are correct now in response i will generate a jwt
     let token=jwt.sign({userId:(username1["_id"].toString())},"verysecretkey");
     res.send({status:true,token:token})
+
+
 }
 
 let getuser=async function(req,res){ 
-    let userId=mongoose.Types.ObjectId(req.params["userId"])
+  try{
+    let id=req.params["userId"]
+    
+    let userId=mongoose.Types.ObjectId(id)
     //console.log(userId)
     
     let user = await userModel.findById(userId);
@@ -35,6 +42,10 @@ let getuser=async function(req,res){
         res.send({msg:user})    
     }
     res.status(404).send("user does not exists")
+  }catch(error){
+    res.send(error.msg)
+
+  }
 }
     
 
@@ -66,6 +77,7 @@ let DeleteUser=async function(req,res){
     res.send({msg:user})
 
 }
+
 
 
 module.exports.createuser=createuser;

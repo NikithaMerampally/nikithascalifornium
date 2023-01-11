@@ -1,4 +1,5 @@
 const AuthorModel = require("../models/authorModel");
+const blogModel = require("../models/blogModel");
 const BlogModel = require("../models/blogModel");
 
 
@@ -47,7 +48,6 @@ const filterData = async function (req, res) {
       return res.status(200).send({data: getData});
     } 
 
-
     //IF THERE IS QUERY GIVEN-------------------------------------------------------
     else {
       let findData = await BlogModel.find({ ...query,isDeleted: false,isPublished: true}).populate("authorId");
@@ -83,7 +83,10 @@ const upddateblog = async function (req, res) {
     let todaysDate= new Date().toLocaleString()
     let updates = await BlogModel.findOneAndUpdate(
       { _id: req.params["blogId"] },
-      {  body: data["body"], $push: {tags: data["tags"]}, isPublished: true, $set: { publishedAt: todaysDate }  },
+      //updated body tag category subcategory as given in readme 
+      {  body: data["body"], $push: {tags: data["tags"]},title:data["title"],category:data["category"],
+      $push: {subcategory: data["subcategory"]}, isPublished: true,$set: { publishedAt: todaysDate }  },
+
       { new: true }
     );
     return res.status(200).send({ data: updates });
@@ -92,7 +95,6 @@ const upddateblog = async function (req, res) {
       return res.status(500).send({status: false, msg : error.message});
   }
 };
-
 
 const deleteBlog = async function (req, res) {
   try {
@@ -125,17 +127,17 @@ const deleteBlogByFilter = async function (req, res) {
   try {
     let query = req.query;
     //IF NO QUERY IS PROVIDED------------------------------------------------
-    if (Object.keys(query).length === 0 ) return res.status(404).send({ status: false, msg: "invalid request" });
+    if (Object.keys(query).length === 0 ) return res.status(404).send({ status: false, msg: "pls provide query" });
 
     //IF QUERY IS PRESENT THEN LOOKING FOR THE REQUIRED DOCUMENT ALONG WITH AUTHORIZATION--------------------
     let data=await BlogModel.find({authorId:req.decodedToken.authorId,...query})
    
-    if(data.length==0) return res.status(400).send({status:false,msg:"Blog not found"})
+    if(data.length==0) return res.status(400).send({status:false,msg:"No blog to be deleted"})
    
     let author=data[0].authorId
     if(author){
       let todaysDate= new Date().toLocaleString()
-      const blogData = await BlogModel.updateMany(
+      const blogData =  BlogModel.updateMany(
       { ...query,  authorId: req.decodedToken.authorId ,isDeleted:false},
       { $set: { isDeleted: true , deletedAt: todaysDate,isPublished:false} },
       { new: true }
@@ -157,10 +159,15 @@ const deleteBlogByFilter = async function (req, res) {
 
 
 
+
 module.exports.createBlog = createBlog;
 module.exports.filterData = filterData;
 module.exports.upddateblog = upddateblog;
 module.exports.deleteBlog = deleteBlog;
 module.exports.deleteBlogByFilter = deleteBlogByFilter;
+
+
+
+
 
 

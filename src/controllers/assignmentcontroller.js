@@ -33,8 +33,7 @@ let getuser=async function(req,res){
     let id=req.params["userId"]
     
     let userId=mongoose.Types.ObjectId(id)
-    //console.log(userId)
-    
+    //console.log(userId) 
     let user = await userModel.findById(userId);
     console.log(user)
     
